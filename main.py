@@ -1,14 +1,11 @@
 from msilib.schema import Directory
 from requests import delete
 import telebot
-
+from secret import TG_TOKEN,ID_ADMIN,ID_GROUP
 import os
 
-ID_ADMIN = '718580248'
-ID_GROUP = '-1001542389568'
 
-
-bot = telebot.TeleBot('5722083415:AAHrlDH2hVRgS601pe7AX1ap5t8PYdhUr7w')
+bot = telebot.TeleBot(TG_TOKEN)
 
 def main():
     photo_url = []
