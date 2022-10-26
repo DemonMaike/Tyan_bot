@@ -1,4 +1,3 @@
-from msilib.schema import Directory
 from requests import delete
 import telebot
 from secret import TG_TOKEN,ID_ADMIN,ID_GROUP
