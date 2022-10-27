@@ -9,7 +9,6 @@ bot = telebot.TeleBot(TG_TOKEN)
 def main():
     # перебераем фото, сохраняем лист
     photo_url = []
-    remains_photo = len(photo_url)
     directory = 'photo'
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
@@ -20,7 +19,8 @@ def main():
         bot.send_photo(ID_GROUP, photo)
         photo.close()
         os.remove(photo_url[0])
-        bot.send_message(ID_ADMIN, f'{remains_photo} фото осталось')
+        bot.send_message(ID_ADMIN, f'{len(photo_url)} фото осталось')
+        print(len(photo_url))
     except:
         bot.send_message(ID_ADMIN, 'Фото закончились')
         
