@@ -7,8 +7,8 @@ import os
 bot = telebot.TeleBot(TG_TOKEN)
 
 def main():
-    photo_url = []
     # перебераем фото, сохраняем лист
+    photo_url = []
     directory = 'photo'
     for filename in os.listdir(directory):
         f = os.path.join(directory, filename)
