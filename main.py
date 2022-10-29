@@ -1,28 +1,37 @@
 from requests import delete
 import telebot
-from secret import TG_TOKEN,ID_ADMIN,ID_GROUP
+from PIL import Image
 import os
+from urllib.request import urlopen
 
+import yadisk
+from secret import TG_TOKEN,ID_ADMIN,ID_GROUP,YA_TOKEN
 
+#Аунтификация
+token = YA_TOKEN
+ya = yadisk.YaDisk(token=token)
 bot = telebot.TeleBot(TG_TOKEN)
 
 def main():
-    # перебераем фото, сохраняем лист
-    photo_url = []
-    directory = 'photo'
-    for filename in os.listdir(directory):
-        f = os.path.join(directory, filename)
-        photo_url.append(f)   
-    # Отправляем первый эллемент списка в группу, удаляем, информируем сколько фото осталось, если не получется, то пишем, что фото закончились
     try:
-        photo = open(photo_url[0], 'rb')  
-        bot.send_photo(ID_GROUP, photo)
-        photo.close()
-        os.remove(photo_url[0])
-        bot.send_message(ID_ADMIN, f'{len(photo_url)} фото осталось')
-        print(len(photo_url))
+        # Директория к папке с фото на Диске
+        dir_path = '/Телеграм Каналы/Тяночки в крови/фото тянок ТГ'
+        # получаем список фоток
+        photo = list(ya.listdir(dir_path))
+        # берем первое фото
+        url_first_photo = photo[0]['file']
+        # Открываем фотку
+        img = Image.open(urlopen(url_first_photo))
+        #Отправляем в группу
+        bot.send_photo(ID_GROUP, photo=img)
+        #Удаляем использованую фотку
+        ya.remove(photo[0]['path'])
+        #Отправляем остаток фото
+        bot.send_message(ID_ADMIN, f'{len(photo)} фото осталось')
     except:
         bot.send_message(ID_ADMIN, 'Фото закончились')
+    
+    
         
 if __name__ == "__main__":
     main()
