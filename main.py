@@ -1,7 +1,6 @@
 from requests import delete
 import telebot
 from PIL import Image
-import os
 from urllib.request import urlopen
 
 import yadisk
@@ -29,7 +28,7 @@ def main():
         #Отправляем остаток фото
         bot.send_message(ID_ADMIN, f'{len(photo)} фото осталось')
     except:
-        bot.send_message(ID_ADMIN, 'Фото закончились')
+        bot.send_message(ID_ADMIN, 'Проблема или фото закончились')
     
     
         
